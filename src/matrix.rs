@@ -10,7 +10,7 @@ pub struct Matrix {
 
 impl Matrix {
 	pub fn zeros(rows: usize, cols: usize) -> Matrix {
-		Matrix {
+		Self {
 			rows,
 			cols,
 			data: vec![vec![0.0; cols]; rows],
@@ -23,6 +23,7 @@ impl Matrix {
 		let mut res = Matrix::zeros(rows, cols);
 		for i in 0..rows {
 			for j in 0..cols {
+				// Random number between -1 and 1
 				res.data[i][j] = rng.gen::<f64>() * 2.0 - 1.0;
 			}
 		}
@@ -31,7 +32,7 @@ impl Matrix {
 	}
 
 	pub fn from(data: Vec<Vec<f64>>) -> Matrix {
-		Matrix {
+		Self {
 			rows: data.len(),
 			cols: data[0].len(),
 			data,
@@ -112,7 +113,7 @@ impl Matrix {
 			(self.data)
 				.clone()
 				.into_iter()
-				.map(|row| row.into_iter().map(|value| function(value)).collect())
+				.map(|row| row.into_iter().map(function).collect())
 				.collect(),
 		)
 	}
@@ -135,11 +136,11 @@ impl Debug for Matrix {
 		write!(
 			f,
 			"Matrix {{\n{}\n}}",
-			(&self.data)
-				.into_iter()
+			self.data
+				.iter()
 				.map(|row| "  ".to_string()
 					+ &row
-						.into_iter()
+						.iter()
 						.map(|value| value.to_string())
 						.collect::<Vec<String>>()
 						.join(" "))

@@ -24,11 +24,7 @@ struct SaveData {
 }
 
 impl Network<'_> {
-	pub fn new<'a>(
-		layers: Vec<usize>,
-		learning_rate: f64,
-		activation: Activation<'a>,
-	) -> Network<'a> {
+	pub fn new(layers: Vec<usize>, learning_rate: f64, activation: Activation<'_>) -> Network {
 		let mut weights = vec![];
 		let mut biases = vec![];
 
@@ -90,7 +86,7 @@ impl Network<'_> {
 
 	pub fn train(&mut self, inputs: Vec<Vec<f64>>, targets: Vec<Vec<f64>>, epochs: u16) {
 		for i in 1..=epochs {
-			if epochs < 100 || i % (epochs / 100) == 0 {
+			if epochs < 10 || i % (epochs / 3) == 0 {
 				println!("Epoch {} of {}", i, epochs);
 			}
 			for j in 0..inputs.len() {
